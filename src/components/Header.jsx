@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import Search from "./Search";
 
-function Header() {
+function Header({ searchValue, setSearchValue }) {
   return (
     <div className="header">
       <div className="container">
@@ -14,8 +15,15 @@ function Header() {
           </div>
         </Link>
 
+        <Search searchValue={searchValue} setSearchValue={setSearchValue}/>
+
         {/* Задача сделать ссылку на всю картинку */}
-        <a className="save-life" target="_blank" rel="noreferrer" href="https://savelife.in.ua/">
+        <a
+          className="save-life"
+          target="_blank"
+          rel="noreferrer"
+          href="https://savelife.in.ua/"
+        >
           <div>
             <object type="image/svg+xml" data="logo_come_back_alive_ukr.svg">
               {/* <img
