@@ -1,8 +1,27 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import CartItem from "../components/PizzaBlock/CartItem";
+import { clearItems } from "../redux/slices/cartSlice";
+import CartEmpty from "../components/CartEmpty";
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const {totalPrice, items} = useSelector((state) => state.cart);
+
+  const totalCount = items.reduce((sum, item) => sum + item.count, 0)
+
+  const onClickClear = () => {
+    if (window.confirm("Очистити кошик?")) {
+      dispatch(clearItems());
+    }
+  };
+
+  if (!totalPrice) {
+    return <CartEmpty /> 
+  }
+
   return (
     <div className="container container--cart">
       <div className="cart">
@@ -37,9 +56,9 @@ const Cart = () => {
                 strokeLinejoin="round"
               ></path>
             </svg>
-            Корзина
+            Кошик
           </h2>
-          <div className="cart__clear">
+          <div onClick={onClickClear} className="cart__clear">
             <svg
               width="20"
               height="20"
@@ -77,19 +96,23 @@ const Cart = () => {
               ></path>
             </svg>
 
-            <span>Очистить корзину</span>
+            <span>Очистити кошик</span>
           </div>
         </div>
         <div className="content__items"></div>
+        {items.map((item) => (
+          <CartItem key={item.id} {...item} />
+        ))}
+
         <div className="cart__bottom">
           <div className="cart__bottom-details">
             <span>
               {" "}
-              Всего пицц: <b> шт.</b>{" "}
+              Всього піцц: <b>{totalCount} од.</b>{" "}
             </span>
             <span>
               {" "}
-              Сумма заказа: <b> ₽</b>{" "}
+              Сума замовлення: <b>{totalPrice} ₴</b>{" "}
             </span>
           </div>
           <div className="cart__bottom-buttons">
@@ -113,10 +136,10 @@ const Cart = () => {
                 ></path>
               </svg>
 
-              <span>Вернуться назад</span>
+              <span>Повернутись назад</span>
             </Link>
             <div className="button pay-btn">
-              <span>Оплатить сейчас</span>
+              <span>Сплатити зараз</span>
             </div>
           </div>
         </div>

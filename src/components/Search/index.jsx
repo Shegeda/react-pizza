@@ -12,7 +12,7 @@ const Search = () => {
   const inputRef = useRef();
 
   const onClickClose = () => {
-    setValue("");
+    setValue(""); 
     setSearchValue("")
     inputRef.current.focus();
   };
