@@ -18,6 +18,7 @@ const Cart = () => {
     }
   };
 
+  //Умовний рендер
   if (!totalPrice) {
     return <CartEmpty /> 
   }

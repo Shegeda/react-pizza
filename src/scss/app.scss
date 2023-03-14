@@ -23,6 +23,22 @@ body {
 
 .content {
   padding: 40px 0;
+//& - це замість слова контент, щоб не повторювати
+  &__error-info {
+    margin: 100px auto;
+    width: 550px;
+    text-align: center;
+
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 20px;
+    }
+  }
 
   &__title {
     font-weight: 800;
