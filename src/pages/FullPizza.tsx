@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-const FullPizza = () => {
-  const [pizza, setPizza] = useState();
+const FullPizza: React.FC = () => {
+  //Налаштував тип для useState
+  const [pizza, setPizza] = useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+  }>();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -23,12 +28,13 @@ const FullPizza = () => {
   });
 
   if (!pizza) {
-    return "Завантаження...";
+    //Щоб не було помилки, обернув рядок "Завантаження" у реакт компонент.
+    return <>Завантаження...</>;
   }
 
   return (
     <div className="container">
-      <img src={pizza.imageUrl} alt="asd" />
+      <img src={pizza.imageUrl} alt="img" />
       <h2>{pizza.title}</h2>
       <h4>{pizza.price} ₴</h4>
     </div>

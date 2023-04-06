@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import play from "../assets/play.svg";
 import pause from "../assets/pause.svg";
 
-export const PlayMusic = () => {
+const PlayMusic = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handleClick = () => {
