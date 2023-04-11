@@ -1,9 +1,8 @@
-import React from "react";
 import ContentLoader from "react-content-loader";
 
-const Skeleton = (props) => (
+const Skeleton = (props: any) => (
   <ContentLoader
-  // className="pizza-block"
+    className="pizza-block"
     speed={2}
     width={280}
     height={530}

@@ -1,7 +1,12 @@
 import React from "react";
 
-function Categories({value, onChangeCategory }) {
+//Створюємо свій тип для Categories
+type CategoriesProps = {
+  value: number;
+  onChangeCategory: any;
+}
 
+const Categories: React.FC<CategoriesProps> = ({ value, onChangeCategory }) => {
   const categories = [
     "Всі",
     "М'ясні",
@@ -11,15 +16,13 @@ function Categories({value, onChangeCategory }) {
     "Закриті",
   ];
 
-  
-
   return (
     <div className="categories">
       <ul>
         {categories.map((categoryName, i) => (
           <li
             key={i}
-            onClick={() =>onChangeCategory(i)}
+            onClick={() => onChangeCategory(i)}
             className={value === i ? "active" : ""}
           >
             {categoryName}
@@ -28,6 +31,6 @@ function Categories({value, onChangeCategory }) {
       </ul>
     </div>
   );
-}
+};
 
 export default Categories;

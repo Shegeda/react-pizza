@@ -3,11 +3,12 @@ import React, { useState } from "react";
 import play from "../assets/play.svg";
 import pause from "../assets/pause.svg";
 
-const PlayMusic = () => {
+
+const PlayMusic: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handleClick = () => {
-    const audioEl = document.getElementsByClassName("audio-element")[0];
+    const audioEl = document.getElementsByClassName("audio-element")[0] as HTMLAudioElement;
     if (isPlaying) {
       audioEl.pause();
     } else {

@@ -2,30 +2,35 @@ import React, { useCallback, useRef } from "react";
 import { setSearchValue } from "../../redux/slices/filterSlice";
 import debounce from "lodash.debounce";
 
-
 import styles from "./Search.module.scss";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-const Search = () => {
-  const dispatch = useDispatch()
+const Search: React.FC = () => {
+  const dispatch = useDispatch();
   const [value, setValue] = useState("");
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onClickClose = () => {
-    setValue(""); 
-    dispatch(setSearchValue(''))
-    inputRef.current.focus();
+    setValue("");
+    dispatch(setSearchValue(""));
+    // Спосіб для отримання данних з null та undefined
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+
+    // Інший спосіб через "Оператор опціональної послідовності"
+    // inputRef.current?.focus();
   };
 
   const updateSearchValue = useCallback(
-    debounce((str) => {
-      dispatch(setSearchValue(str))
+    debounce((str: any) => {
+      dispatch(setSearchValue(str));
     }, 500),
     []
   );
 
-  const onChangeInput = (event) => {
+  const onChangeInput = (event: any) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };

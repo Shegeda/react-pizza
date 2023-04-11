@@ -5,7 +5,27 @@ import { Link } from "react-router-dom";
 import { addItem, selectCartItemById } from "../../redux/slices/cartSlice";
 const typeNames = ["тонке", "традиційне"];
 
-function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
+//Створюємо свій тип для PizzaBlock
+type PizzaBlockProps = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  //Масив чисел
+  sizes: number[];
+  types: number[];
+  // rating: number;
+};
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({
+  id,
+  title,
+  price,
+  imageUrl,
+  sizes,
+  types,
+  // rating,
+}) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(selectCartItemById(id));
   const [activeType, setActiveType] = useState(0);
@@ -82,6 +102,6 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
       </div>
     </div>
   );
-}
+};
 
 export default PizzaBlock;

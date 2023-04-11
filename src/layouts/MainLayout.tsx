@@ -4,7 +4,7 @@ import Header from "../components/Header";
 
 
 //Виніс хедер у окремий компонент
-export const MainLayout = () => {
+export const MainLayout: React.FC = () => {
   return (
     <div className="wrapper">
       <Header />

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import {
+  selectFilter,
   setCategotyId,
   setCurrentPage,
   setFilters,
@@ -16,22 +17,20 @@ import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
 import { fetchPizzas } from "../redux/slices/pizzaSlice";
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const { categoryId, sort, currentPage, searchValue } = useSelector(
-    (state) => state.filter
-  );
-  const { items, status } = useSelector((state) => state.pizza);
+  const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter);
+  const { items, status } = useSelector((state: any) => state.pizza);
 
-  const onChangeCategory = (id) => {
-    dispatch(setCategotyId(id));
+  const onChangeCategory = (idx: number) => {
+    dispatch(setCategotyId(idx));
   };
 
-  const onChangePage = (page) => {
+  const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
   };
 
@@ -42,6 +41,8 @@ const Home = () => {
     const search = searchValue ? `&search=${searchValue}` : "";
 
     dispatch(
+      // Так можна вимкнути TS поки не прийму рішення код нижче типізувати
+      //@ts-ignore
       fetchPizzas({
         category,
         sortBy,
@@ -96,7 +97,7 @@ const Home = () => {
     isSearch.current = false;
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+  const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
 
   const sceletons = [...new Array(4)].map((_, index) => (
     <Skeleton key={index} />
