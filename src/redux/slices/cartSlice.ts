@@ -1,6 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+//Створили тип структури наших слайсів у корзині (він не залижить не від компонентів, пропсів та ін)
+export type CartItem = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  type: string;
+  size: number;
+  count: number;
+};
+
+//"interface" може типізувати тільки обʼєкт, а "type" будь що може типізувати
+interface cartSliceState {
+  totalPrice: number;
+  items: CartItem[];
+}
+
+const initialState: cartSliceState = {
   totalPrice: 0,
   items: [],
 };
@@ -9,7 +26,7 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addItem(state, action) {
+    addItem(state, action: PayloadAction<CartItem>) {
       const findItem = state.items.find((obj) => obj.id === action.payload.id);
 
       if (findItem) {
@@ -25,7 +42,7 @@ export const cartSlice = createSlice({
         return obj.price * obj.count + sum;
       }, 0);
     },
-    minusItem(state, action) {
+    minusItem(state, action: PayloadAction<String>) {
       const findItem = state.items.find((obj) => obj.id === action.payload);
 
       if (findItem) {

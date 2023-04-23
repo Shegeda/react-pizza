@@ -1,24 +1,24 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectSort, setSort } from "../redux/slices/filterSlice";
+import { SortPropertyEnum, selectSort, setSort } from "../redux/slices/filterSlice";
 
 //Створив свій тип данних і додав в sortList
 type SortItem = {
   name: string;
-  sortProperty: string;
+  sortProperty: SortPropertyEnum;
 }
 
 //додали в кінці SortItem "[]" і це став массив обʼєктів бо він нам треба
 export const sortList: SortItem[] = [
-  { name: "популярністю (⬇)", sortProperty: "rating" },
-  { name: "популярністю (⬆)", sortProperty: "-rating" },
-  { name: "ціною (⬇)", sortProperty: "price" },
-  { name: "ціною (⬆)", sortProperty: "-price" },
-  { name: "алфавітом (А-Я)", sortProperty: "title" },
-  { name: "алфавітом (Я-А)", sortProperty: "-title" },
+  { name: "популярністю (⬇)", sortProperty: SortPropertyEnum.RATING_DESC },
+  { name: "популярністю (⬆)", sortProperty: SortPropertyEnum.RATING_ASC },
+  { name: "ціною (⬇)", sortProperty: SortPropertyEnum.PRICE_DESC },
+  { name: "ціною (⬆)", sortProperty: SortPropertyEnum.PRICE_ASC },
+  { name: "алфавітом (А-Я)", sortProperty: SortPropertyEnum.TITLE_DESC },
+  { name: "алфавітом (Я-А)", sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
-function Sort() {
+function SortPopup() {
   const dispatch = useDispatch();
   const sort = useSelector(selectSort);
 
@@ -32,8 +32,12 @@ function Sort() {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (!event.path.includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const _event = event as MouseEvent & {
+        //додав тип для "path" в середині функції handleClickOutside()
+        path: Node[]
+      };
+      if (sortRef.current && !_event.path.includes(sortRef.current)) {
         setOpen(false);
         // console.log("click outside");
       }
@@ -85,4 +89,4 @@ function Sort() {
   );
 }
 
-export default Sort;
+export default SortPopup;
